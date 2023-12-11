@@ -1,13 +1,12 @@
 #!/bin/bash
 dirs="./sources" && [[ ! -d ${dirs} ]] && mkdir ${dirs}
-SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0N1ZXJ2b0Nvb2wvdnBzQm90L21haW4K"
-SUB_DOM='base64 -d'
+SCPresq="NB2HI4DTHIXS64TBO4XGO2LUNB2WE5LTMVZGG33OORSW45BOMNXW2L2DOVSXE5TPINXW63BPOZYH\nGQTPOQXW2YLJNYXXG33VOJRWK4YK"
+SUB_DOM='base32 -d'
 bar="\e[0;36m=====================================================\e[0m"
 update () {
 cd $HOME
-REQUEST=$(echo $SCPresq|$SUB_DOM)
-wget -O "$HOME/lista-arq" ${REQUEST}/lista-bot > /dev/null 2>&1
-sleep 1s
+REQUEST=$(echo -e $SCPresq|$SUB_DOM)
+echo "VPSBot.sh ShellBot.sh pato.sh" >> lista-arq
 if [[ -e $HOME/lista-arq ]]; then
 for arqx in `cat $HOME/lista-arq`; do
 wget -O $HOME/$arqx ${REQUEST}/${arqx} > /dev/null 2>&1 && echo -e "\033[0;49;93mdescargando \033[0;49;32m${arqx}\033[0m" && [[ -e $HOME/$arqx ]] && veryfy_fun $arqx
@@ -20,8 +19,8 @@ veryfy_fun () {
 dirs="${dirb}/sources" && [[ ! -d ${dirs} ]] && mkdir ${dirs}
 unset ARQ
 case $1 in
-"VPSBot.sh" | "ShellBot.sh" | "vpsbot_conf.sh" ) ARQ="$(pwd)";;
-"pato.sh" ) ARQ="./sources";;
+"ShellBot.sh" | "pato.sh" ) ARQ="sources";;
+"VPSBot.sh" ) ARQ="$dir";;
 esac
 mv -f $HOME/$1 ${ARQ}/$1
 chmod +x ${ARQ}/$1
