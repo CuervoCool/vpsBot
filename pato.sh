@@ -2,13 +2,7 @@
 cache_src () {
 echo 2 > /proc/sys/vm/drop_caches
 sleep 2
-#MEMORIA RAM
-unset ram1
-unset ram2
-unset ram3
-ram1=$(free -h | grep -i mem | awk {'print $2'})
-ram2=$(free -h | grep -i mem | awk {'print $4'})
-ram3=$(free -h | grep -i mem | awk {'print $3'})
+ram1=$(free -h | grep -i mem | awk {'print $2'}) && ram2=$(free -h | grep -i mem | awk {'print $4'}) && ram3=$(free -h | grep -i mem | awk {'print $3'})
 	  bot_retorno="=============\n"
 	  bot_retorno+="Ram: $ram1\n"
 	  bot_retorno+="USADA: $ram3\n"
@@ -17,16 +11,12 @@ ram3=$(free -h | grep -i mem | awk {'print $3'})
 	  bot_retorno+="=============\n"
 msj_fun
 }
-
-
 myid_src () {
 bot_retorno="====================\n"
           bot_retorno+="SU ID: ${chatuser}\n"
           bot_retorno+="====================\n"
 msj_fun
 }
-
-
 menu_src () {
 bot_retorno="=========COMANDOS=========\n"
 	 if [[ $(echo $permited|grep "${chatuser}") = "" ]]; then
@@ -46,36 +36,11 @@ bot_retorno="=========COMANDOS=========\n"
 	 fi	
 msj_fun
 }
-
-
 infosys_src () {
-
-#HORA Y FECHA
-unset _hora
-unset _fecha
-_hora=$(printf '%(%H:%M:%S)T') 
-_fecha=$(printf '%(%D)T') 
-
-#PROCESSADOR
-unset _core
-unset _usop
-_core=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
-_usop=$(printf '%-1s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
-
-#MEMORIA RAM
-unset ram1
-unset ram2
-unset ram3
-ram1=$(free -h | grep -i mem | awk {'print $2'})
-ram2=$(free -h | grep -i mem | awk {'print $4'})
-ram3=$(free -h | grep -i mem | awk {'print $3'})
-
-unset _ram
-unset _usor
-_ram=$(printf ' %-9s' "$(free -h | grep -i mem | awk {'print $2'})")
-_usor=$(printf '%-8s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')")
-
-unset os_sys
+_hora=$(printf '%(%H:%M:%S)T') && _fecha=$(printf '%(%D)T')
+_core=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)") && _usop=$(printf '%-1s' "$(top -bn1 | awk '/Cpu/ { cpu = "" 100 - $8 "%" }; END { print cpu }')")
+ram1=$(free -h | grep -i mem | awk {'print $2'}) && ram2=$(free -h | grep -i mem | awk {'print $4'}) && ram3=$(free -h | grep -i mem | awk {'print $3'})
+_ram=$(printf ' %-9s' "$(free -h | grep -i mem | awk {'print $2'})") && _usor=$(printf '%-8s' "$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')")
 os_sys=$(echo $(cat -n /etc/issue |grep 1 |cut -d' ' -f6,7,8 |sed 's/1//' |sed 's/      //')) && echo $system|awk '{print $1, $2}'
 
 bot_retorno="$LINE\n"
@@ -95,8 +60,6 @@ bot_retorno="$LINE\n"
           bot_retorno+="$LINE\n"
 msj_fun
 }
-
-
 cmd_fun () {
 #comand="$@"
 #var="$("${comand[0]}" "${comand[1]}")"
@@ -104,28 +67,21 @@ cmd_fun () {
 bot_retorno+="$($1)"
 msj_fun
 }
-
-
 invalido_src () {
 bot_retorno="$LINE\n"
          bot_retorno+="Comando invalido!\n"
          bot_retorno+="$LINE\n"
 }
-
-
 meu_ip_fun () {
 MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 MIP2=$(wget -qO- ipv4.icanhazip.com)
 [[ "$MIP" != "$MIP2" ]] && IP="$MIP2" || IP="$MIP"
 }
-
 meu_ip () {
 MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 MIP2=$(wget -qO- ipv4.icanhazip.com)
 [[ "$MIP" != "$MIP2" ]] && echo "$MIP2" || echo "$MIP"
 }
-
-
 update () {
 [[ ! -e "$HOME/update.sh" ]] && wget -O $HOME/update.sh https://raw.githubusercontent.com/rudi9999/VPSBot/main/update.sh &> /dev/null
 chmod +x $HOME/update.sh
@@ -133,8 +89,6 @@ screen -dmS updateBotGen $HOME/update.sh start
 sleep 1
 killall VPSBot.sh
 }
-
-
 ayuda_src () {
 bot_retorno="===========AYUDA===========\n"
 	 if [[ $(echo $permited|grep "${chatuser}") = "" ]]; then
@@ -162,8 +116,6 @@ bot_retorno="===========AYUDA===========\n"
 	 fi
 msj_fun
 }
-
-
 comand () {
 	    if [[ $(echo $permited|grep "${chatuser}") = "" ]]; then
 		 case ${comando[0]} in
@@ -181,18 +133,7 @@ comand () {
 			 /[Rr]eboot)reboot_src &;;
 			 /[Cc]ache)cache_src &;;
 			 /[Uu]pdate|/[Aa]ctualizar)update &;;
-			 /[Cc]md)cmd_fun "${comand[1]}" "${comando[2]}" &;;
 			 /*)invalido_fun &;;
 		 esac
 	    fi
-}
-
-
-reboot_src () {
-bot_retorno="$LINE\n"
-          bot_retorno+="Reiniciando servidor VPS\n"
-          bot_retorno+="$LINE\n"
-msj_fun
-sleep 2
-reboot
 }
