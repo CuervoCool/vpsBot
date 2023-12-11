@@ -11,12 +11,7 @@ ram1=$(free -h | grep -i mem | awk {'print $2'}) && ram2=$(free -h | grep -i mem
 	  bot_retorno+="=============\n"
 msj_fun
 }
-myid_src () {
-bot_retorno="====================\n"
-          bot_retorno+="SU ID: ${chatuser}\n"
-          bot_retorno+="====================\n"
-msj_fun
-}
+myid_src () { bot_retorno="$linea\n" && bot_retorno+="⠀⠀⠀⠀👤●⸺ [ ${message_from_first_name} ]\n⠀⠀⠀⠀🆔 ●⸺ [<code>${message_from_id}</code>]\n$linea\n" && msj_fun ; }
 menu_src () {
 bot_retorno="=========COMANDOS=========\n"
 	 if [[ $(echo $permited|grep "${chatuser}") = "" ]]; then
