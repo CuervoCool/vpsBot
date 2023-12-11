@@ -4,11 +4,6 @@ SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0N1ZXJ2b0Nvb2wvdnBzQm90L21
 SUB_DOM='base64 -d'
 bar="\e[0;36m=====================================================\e[0m"
 update () {
-[[ -d ${dirs} ]] && rm -rf ${dirs}
-[[ -e ${dirb}/VPSBot.sh ]] && rm ${dirb}/VPSBot.sh
-[[ -e /usr/bin/VPSBot ]] && rm /usr/bin/VPSBot
-[[ -e ${dirb}/ShellBot.sh ]] && rm ${dirb}/ShellBot.sh
-[[ -e ${dirb}/vpsbot_conf.sh ]] && rm ${dirb}/vpsbot_conf.sh
 cd $HOME
 REQUEST=$(echo $SCPresq|$SUB_DOM)
 wget -O "$HOME/lista-arq" ${REQUEST}/lista-bot > /dev/null 2>&1
