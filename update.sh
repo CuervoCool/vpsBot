@@ -1,11 +1,8 @@
 #!/bin/bash
-
-dirb="/etc/VPSBot" && [[ ! -d ${dirb} ]] && mkdir ${dirb}
-dirs="${dirb}/sources" && [[ ! -d ${dirs} ]] && mkdir ${dirs}
-SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3J1ZGk5OTk5L1ZQU0JvdC9tYWluL3NvdXJjZXM="
+dirs="./sources" && [[ ! -d ${dirs} ]] && mkdir ${dirs}
+SCPresq="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0N1ZXJ2b0Nvb2wvdnBzQm90L21haW4K"
 SUB_DOM='base64 -d'
 bar="\e[0;36m=====================================================\e[0m"
-
 update () {
 [[ -d ${dirs} ]] && rm -rf ${dirs}
 [[ -e ${dirb}/VPSBot.sh ]] && rm ${dirb}/VPSBot.sh
@@ -24,20 +21,16 @@ fi
  rm $HOME/lista-arq
  echo "cd ${dirb}" > /usr/bin/VPSBot && echo './vpsbot_conf.sh' >> /usr/bin/VPSBot && chmod +x /usr/bin/VPSBot
 }
-
 veryfy_fun () {
 dirs="${dirb}/sources" && [[ ! -d ${dirs} ]] && mkdir ${dirs}
 unset ARQ
 case $1 in
-"VPSBot.sh")ARQ="${dirb}";;
-"ShellBot.sh")ARQ="${dirb}";;
-"vpsbot_conf.sh")ARQ="${dirb}";;
-*)ARQ="${dirs}";;
+"VPSBot.sh" | "ShellBot.sh" | "vpsbot_conf.sh" ) ARQ="$(pwd)";;
+"pato.sh" ) ARQ="./sources";;
 esac
 mv -f $HOME/$1 ${ARQ}/$1
 chmod +x ${ARQ}/$1
 }
-
 mensaje () {
  if [[ $1 = updating ]]; then
   MENSAJE="Actualizando VPSBot..."
